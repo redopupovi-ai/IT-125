@@ -1,0 +1,18 @@
+import asyncio
+from aiogram import Bot, Dispatcher
+from config import BOT_TOKEN
+from handlers import BotHandlers
+
+class TelegramBot:
+    def __init__(self):
+        self.bot = Bot(token=BOT_TOKEN)
+        self.dp = Dispatcher()
+        self.handlers = BotHandlers(self.bot)
+
+    async def start(self):
+        self.dp.include_router(self.handlers.router)
+        await self.dp.start_polling(self.bot)
+
+if __name__ == "__main__":
+    bot_app = TelegramBot()
+    asyncio.run(bot_app.start())
